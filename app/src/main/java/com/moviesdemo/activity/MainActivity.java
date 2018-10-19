@@ -9,7 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.ProgressBar;
 
 
 import com.moviesdemo.R;
@@ -17,6 +18,7 @@ import com.moviesdemo.fragment.LatestMovieFragment;
 import com.moviesdemo.fragment.MovieListFragment;
 import com.moviesdemo.models.MovieDetails;
 import com.moviesdemo.models.MovieList;
+import com.moviesdemo.models.MovieResult;
 import com.moviesdemo.network.APIClient;
 import com.moviesdemo.network.APIInterface;
 import com.moviesdemo.utils.AppConstants;
@@ -29,7 +31,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
-    APIInterface apiInterface;
+    private ProgressBar progressBar;
+    private APIInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +40,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         mDrawer = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.nav_view);
+        progressBar = findViewById(R.id.progress_list);
         mNavigationView.setNavigationItemSelectedListener(this);
-        addListFragment();
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         callMovieListAPI();
 
-        callMovieDetailsAPI("335983");
+//        callMovieDetailsAPI("335983");
+
 
     }
 
@@ -83,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 MovieList movieList = response.body();
                 MoviesDemoLogger.d("xxxxx: Response movie list text",movieList.getResults().get(0).getOriginal_title());
+                progressBar.setVisibility(View.GONE);
+                addListFragment(movieList);
 
             }
 
@@ -93,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    private void addListFragment() {
-        Fragment fragment = new MovieListFragment();
+    private void addListFragment(MovieList movieList) {
+        Fragment fragment = new MovieListFragment().newInstance(movieList);
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.content_frame, fragment);
@@ -113,9 +119,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment);
+            ft.addToBackStack(null);
             ft.commit();
         }
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
