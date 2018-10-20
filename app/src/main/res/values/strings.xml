@@ -3,4 +3,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="released_on">Released on:</string>
+    <string name="book_now">Book Now</string>
+    <string name="open_latest_movies">Open Latest Movies Fragment</string>
+    <string name="open_top_rated_movies">Open Top Rated Movies Fragment</string>
+    <string name="open_most_watched_movies">Open Most Watched Movies Fragment</string>
+    <string name="something_went_wrong">Something went wrong. Please try again later</string>
+    <string name="please_connect_internet">Please connect to the internet</string>
+    <string name="open_booking">Open Booking activity</string>
+    <string name="title_activity_search_movie">SearchMovieActivity</string>
+    <string name="search_here">Search Here</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

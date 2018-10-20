@@ -20,13 +20,13 @@ import com.moviesdemo.utils.AppUtils;
 
 import java.util.ArrayList;
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
+public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<MovieResult> mMovieResult;
     private RequestManager glide;
 
-    public MovieListAdapter(Context context, ArrayList<MovieResult> movieResult){
+    public SearchMovieAdapter(Context context, ArrayList<MovieResult> movieResult){
         this.context=context;
         mMovieResult=movieResult;
         glide=Glide.with(context);
@@ -34,16 +34,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.grid_item, parent, false);
-        return new MovieViewHolder(view);
+    public SearchMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.search_item, parent, false);
+        return new SearchMovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, final int position) {
+    public void onBindViewHolder(SearchMovieViewHolder holder, final int position) {
         holder.title.setText(mMovieResult.get(position).getTitle());
         holder.release.setText(context.getResources().getString(R.string.released_on)+" "+mMovieResult.get(position).getRelease_date());
-        holder.rating.setText(mMovieResult.get(position).getVote_average()+"");
+        holder.overview.setText(mMovieResult.get(position).getOverview());
         String imageurl=AppConstants.IMAGE_BASE_URL+mMovieResult.get(position).getPoster_path();
         glide.load(imageurl).override(AppUtils.convertDpToPixel(150,context), AppUtils.convertDpToPixel(150,context)).
                 diskCacheStrategy(DiskCacheStrategy.RESULT).into(holder.image);
@@ -70,18 +70,38 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         else
             return mMovieResult.size();
     }
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
+
+    public void updateList(ArrayList<MovieResult> movieResult) {
+        if(mMovieResult==null){
+            mMovieResult=new ArrayList<>();
+        }else{
+            mMovieResult.clear();
+        }
+        mMovieResult.addAll(movieResult);
+        notifyDataSetChanged();
+    }
+    public void clearList() {
+        if(mMovieResult==null){
+            mMovieResult=new ArrayList<>();
+        }else{
+            mMovieResult.clear();
+        }
+        notifyDataSetChanged();
+    }
+
+    public class SearchMovieViewHolder extends RecyclerView.ViewHolder{
         public ImageView image;
-        public TextView title,release,rating;
+        public TextView title,release,overview;
         private View mItemView;
 
-        public MovieViewHolder(View itemView) {
+        public SearchMovieViewHolder(View itemView) {
             super(itemView);
             mItemView=itemView;
-            image=itemView.findViewById(R.id.movie_poster);
-            title=itemView.findViewById(R.id.movie_title);
-            release=itemView.findViewById(R.id.release_date);
-            rating=itemView.findViewById(R.id.rating);
+            image=itemView.findViewById(R.id.movie_poster_search);
+            title=itemView.findViewById(R.id.movie_title_search);
+            release=itemView.findViewById(R.id.movie_release_date);
+            overview=itemView.findViewById(R.id.movie_overview_search);
+
         }
     }
 }

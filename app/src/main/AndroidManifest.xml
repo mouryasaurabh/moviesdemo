@@ -2,11 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.moviesdemo">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <meta-data
         android:name="io.fabric.ApiKey"
-        android:value="343fad194828a18278bce6f47c764a8cb5ff2687"
-        />
+        android:value="343fad194828a18278bce6f47c764a8cb5ff2687" />
 
     <application
         android:allowBackup="true"
@@ -15,24 +16,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MovieListActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="343fad194828a18278bce6f47c764a8cb5ff2687" />
+
+        <activity android:name=".activity.MovieDetailsActivity" />
+        <activity android:name=".activity.MovieWebviewActivity" />
+        <activity
+            android:name=".activity.SearchMovieActivity"
+            android:label="@string/title_activity_search_movie"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

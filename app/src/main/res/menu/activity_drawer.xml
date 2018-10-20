@@ -3,13 +3,16 @@
     <group>
         <item android:id="@+id/nav_item_one"
             android:icon="@drawable/ic_launcher_background"
-            android:title="Latest" />
+            android:title="Search Movie" />
         <item android:id="@+id/nav_item_two"
             android:icon="@drawable/ic_launcher_background"
-            android:title="Most Searched" />
+            android:title="Latest Movies" />
         <item android:id="@+id/nav_item_three"
             android:icon="@drawable/ic_launcher_background"
-            android:title="Most Watched" />
+            android:title="Top Rated Movies" />
+        <item android:id="@+id/nav_item_four"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Most Watched Movies" />
     </group>
 
 </menu>
