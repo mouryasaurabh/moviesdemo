@@ -33,7 +33,9 @@ public class MovieDBManager {
             dbHelper.close();
         }
     }
-
+    /**
+     * insert operation only when DB is open
+     * */
     public void insert(MovieResult movieResult) {
         int id=movieResult.getId();
         String name=movieResult.getTitle();
@@ -55,7 +57,9 @@ public class MovieDBManager {
         }
     }
 
-
+    /**
+     * fetch operation from DB when no network
+     * */
     public ArrayList<MovieResult> fetch() {
         String[] columns = new String[] { MovieDatabaseHelper.MOVIE_ID, MovieDatabaseHelper.MOVIE_NAME, MovieDatabaseHelper.POSTER_PATH,  MovieDatabaseHelper.RELEASE_DATE, MovieDatabaseHelper.RATING  };
         Cursor cursor = database.query(MovieDatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
@@ -76,7 +80,9 @@ public class MovieDBManager {
         }
         return movieResultList;
     }
-
+    /**
+     * clear DB before update
+     * */
     public void deleteElements() {
         database.execSQL("delete from "+ MovieDatabaseHelper.TABLE_NAME);
     }

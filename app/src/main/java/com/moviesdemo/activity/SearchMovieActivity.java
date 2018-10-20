@@ -29,6 +29,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This activity is to show the search functionality
+ * */
 public class SearchMovieActivity extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView recyclerView;
     private SearchMovieAdapter searchMovieAdapter;
@@ -57,6 +60,10 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
 
 
     }
+    /**
+     * the handler performs search action after 1 second of typing complete, if user starts typing again previous request are cancelled
+     * and handler callbacks are also removed
+     * */
     private TextWatcher textWatcher=new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,8 +135,8 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.cross_icon:
                 searchBar.setText("");
-                if(searchMovieAdapter!=null)
-                    searchMovieAdapter.clearList();
+//                if(searchMovieAdapter!=null)
+//                    searchMovieAdapter.clearList();
                 break;
             case R.id.search_bar_icon:
                 showSearchView(true);

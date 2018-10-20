@@ -30,6 +30,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This activity is the main activity of the application
+ * It contains the movie list fragment and through clicking item you can reach movie details screen
+ * Navigation Drawer has search feature implementation
+ * */
 public class MovieListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
@@ -52,6 +57,14 @@ public class MovieListActivity extends AppCompatActivity implements NavigationVi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         initDB();
+        getMovieData();
+    }
+    /**
+     * This method checks for internet and fetches data from server
+     * if internet is off, it shows error and brings data from DB
+     * If DB is empty, it again shows an error
+     * */
+    private void getMovieData() {
         if(AppUtils.isNetworkConnected(this)){
             callMovieListAPI();
         }else{

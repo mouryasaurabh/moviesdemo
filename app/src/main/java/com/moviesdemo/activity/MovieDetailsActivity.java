@@ -14,6 +14,10 @@ import com.moviesdemo.databinding.ActivityMovieDetailsBinding;
 import com.moviesdemo.utils.AppConstants;
 import com.moviesdemo.utils.AppUtils;
 
+/**
+ * This actitvity is to demonstrate the MVVM architecture with use of Observable components
+ * */
+
 public class MovieDetailsActivity extends AppCompatActivity implements MovieDetailViewModel.ViewModelToViewListener {
     private MovieDetailViewModel movieDetailViewModel;
     private ActivityMovieDetailsBinding movieDetailsBinding;

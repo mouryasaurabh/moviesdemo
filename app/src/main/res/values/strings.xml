@@ -14,5 +14,6 @@
     <string name="title_activity_search_movie">SearchMovieActivity</string>
     <string name="search_here">Search Here</string>
     <string name="cancel">Cancel</string>
+    <string name="no_data_found">No data found to display!!</string>
 
 </resources>

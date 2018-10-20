@@ -135,6 +135,7 @@ public class MovieDetailViewModel extends BaseObservable {
     public void onUrlClick(View view){
         viewModelToViewListener.openWebview(website.get());
     }
+
     public void onBookClick(View view){
         viewModelToViewListener.openBookingPage();
     }

@@ -20,11 +20,14 @@ import com.moviesdemo.utils.AppUtils;
 
 import java.util.ArrayList;
 
-public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
+public class SearchMovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<MovieResult> mMovieResult;
     private RequestManager glide;
+    private boolean showEmptyView=false, isAfterUpdate=false;
+    private final int NO_ITEM_VIEW=1001;
+    private final int ITEM_VIEW=1002;
 
     public SearchMovieAdapter(Context context, ArrayList<MovieResult> movieResult){
         this.context=context;
@@ -34,28 +37,46 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
     }
 
     @Override
-    public SearchMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.search_item, parent, false);
-        return new SearchMovieViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if( viewType == NO_ITEM_VIEW) {
+            View view = inflater.inflate(R.layout.no_item, parent, false);
+            return new NoMovieViewHolder(view);
+        }     else{
+            View view = inflater.inflate(R.layout.search_item, parent, false);
+            return new SearchMovieViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(SearchMovieViewHolder holder, final int position) {
-        holder.title.setText(mMovieResult.get(position).getTitle());
-        holder.release.setText(context.getResources().getString(R.string.released_on)+" "+mMovieResult.get(position).getRelease_date());
-        holder.overview.setText(mMovieResult.get(position).getOverview());
-        String imageurl=AppConstants.IMAGE_BASE_URL+mMovieResult.get(position).getPoster_path();
-        glide.load(imageurl).override(AppUtils.convertDpToPixel(150,context), AppUtils.convertDpToPixel(150,context)).
-                diskCacheStrategy(DiskCacheStrategy.RESULT).into(holder.image);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context , MovieDetailsActivity.class);
-                intent.putExtra(AppConstants.MOVIE_ID,mMovieResult.get(position).getId()+"");
-                context.startActivity(intent);
-            }
-        });
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
+        if(!showEmptyView){
+            SearchMovieViewHolder searchMovieViewHolder=(SearchMovieViewHolder)holder;
+            searchMovieViewHolder.title.setText(mMovieResult.get(position).getTitle());
+            searchMovieViewHolder.release.setText(context.getResources().getString(R.string.released_on)+" "+mMovieResult.get(position).getRelease_date());
+            searchMovieViewHolder.overview.setText(mMovieResult.get(position).getOverview());
+            String imageurl=AppConstants.IMAGE_BASE_URL+mMovieResult.get(position).getPoster_path();
+            glide.load(imageurl).override(AppUtils.convertDpToPixel(150,context), AppUtils.convertDpToPixel(150,context)).
+                    diskCacheStrategy(DiskCacheStrategy.RESULT).into(searchMovieViewHolder.image);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context , MovieDetailsActivity.class);
+                    intent.putExtra(AppConstants.MOVIE_ID,mMovieResult.get(position).getId()+"");
+                    context.startActivity(intent);
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(showEmptyView && isAfterUpdate){
+            return NO_ITEM_VIEW;
+        }else{
+            return ITEM_VIEW;
+        }
     }
 
     @Override
@@ -65,13 +86,21 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
     @Override
     public int getItemCount() {
-        if(mMovieResult==null)
-            return 0;
-        else
+        if(mMovieResult==null||mMovieResult.size()==0){
+            if(isAfterUpdate){
+                showEmptyView=true;
+                return 1;
+            }else
+                return 0;
+        }
+        else{
+            showEmptyView=false;
             return mMovieResult.size();
+        }
     }
 
     public void updateList(ArrayList<MovieResult> movieResult) {
+        isAfterUpdate=true;
         if(mMovieResult==null){
             mMovieResult=new ArrayList<>();
         }else{
@@ -102,6 +131,12 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             release=itemView.findViewById(R.id.movie_release_date);
             overview=itemView.findViewById(R.id.movie_overview_search);
 
+        }
+    }
+    public class NoMovieViewHolder extends RecyclerView.ViewHolder{
+
+        public NoMovieViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }

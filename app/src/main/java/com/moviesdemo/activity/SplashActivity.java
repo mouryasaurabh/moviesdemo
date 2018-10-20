@@ -18,8 +18,10 @@ import com.moviesdemo.network.APIInterface;
 
 public class SplashActivity extends AppCompatActivity {
 
-
-    private static int SPLASH_TIME_OUT = 3;
+/**
+ * Splash time out to show spalsh for 3 seconds
+ * */
+    private static int SPLASH_TIME_OUT = 3000;
     public static APIInterface apiInterface;
 
     @Override

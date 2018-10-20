@@ -47,7 +47,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         String imageurl=AppConstants.IMAGE_BASE_URL+mMovieResult.get(position).getPoster_path();
         glide.load(imageurl).override(AppUtils.convertDpToPixel(150,context), AppUtils.convertDpToPixel(150,context)).
                 diskCacheStrategy(DiskCacheStrategy.RESULT).into(holder.image);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context , MovieDetailsActivity.class);

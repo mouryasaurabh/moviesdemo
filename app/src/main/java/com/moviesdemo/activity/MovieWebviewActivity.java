@@ -12,7 +12,9 @@ import android.widget.ProgressBar;
 
 import com.moviesdemo.R;
 import com.moviesdemo.utils.AppConstants;
-
+/**
+ * This activity is to show the Webview usage
+ * */
 
 public class MovieWebviewActivity extends AppCompatActivity {
     private ProgressBar progressBar;
